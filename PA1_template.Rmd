@@ -62,4 +62,7 @@ weekend <- weekdays(as.Date(activity$date)) %in% c("Saturday", "Sunday")
 dateActivity <- transform(activity, weekend=as.POSIXlt(date, format='%Y/%m/%d')$wday %in% c(0, 6))
 dateActivity$daytype[weekend==TRUE] <- "weekend"
 dateActivity$daytype[weekend==FALSE] <- "weekday"
+
+library(lattice)
+xyplot(steps ~ interval | daytype, data = dateActivity, layout = c(1, 2), type = "l")
 ```

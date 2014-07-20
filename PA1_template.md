@@ -3,40 +3,48 @@
 
 ## Loading and preprocessing the data
 
-```{r LoadData,echo=TRUE}
+
+```r
 activity <- read.csv("activity.csv")
 activity$date <- as.Date(activity$date, "%Y-%m-%d")
 ```
 
 ## What is mean total number of steps taken per day?
 
-```{r totalSteps, echo=TRUE}
+
+```r
 countSteps <- aggregate(steps ~ date, activity, sum)
 hist(countSteps$steps, breaks=20, main = "Histogram of total number of steps per day", xlab = "Totals steps per day")
 ```
 
-#### Mean of steps taken per day : `r mean(countSteps$steps)`
+![plot of chunk totalSteps](figure/totalSteps.png) 
 
-#### Median of steps taken per day : `r median(countSteps$steps)`
+#### Mean of steps taken per day : 1.0766 &times; 10<sup>4</sup>
+
+#### Median of steps taken per day : 10765
 
 ## What is the average daily activity pattern?
 
-```{r dailyaverage, echo=TRUE}
+
+```r
 dailyAverage <- aggregate(.~interval, FUN=mean, data=activity)
 plot(dailyAverage$interval, dailyAverage$steps, type="l", main="Daily average activity pattern", xlab = "5-minute intervals", ylab = "average numbers of steps across all days")
 ```
 
-#### Interval that contains the maximum number of steps averaged across all days : `r dailyAverage[dailyAverage$steps==max(dailyAverage$steps),"interval"]`
+![plot of chunk dailyaverage](figure/dailyaverage.png) 
+
+#### Interval that contains the maximum number of steps averaged across all days : 835
 
 ## Imputing missing values
 
-#### Total number of missing values in the dataset : `r sum(is.na(activity$steps))`
+#### Total number of missing values in the dataset : 2304
 
 #### Missing values for steps is replaced by 0
 
 #### New data set with missing values 0 
 
-```{r missingdata, echo=TRUE}
+
+```r
 missingsteps <- is.na(activity$steps)
 activity2 <- activity
 activity2[missingsteps, "steps"] <- 0
@@ -44,14 +52,17 @@ activity2[missingsteps, "steps"] <- 0
 
 #### Histogram of total steps with replaced dataset
 
-```{r totalSteps2, echo=TRUE}
+
+```r
 countSteps2 <- aggregate(steps ~ date, activity2, sum)
 hist(countSteps2$steps, breaks=20, main = "Histogram of total number of steps per day", xlab = "Totals steps per day")
 ```
 
-#### Mean of steps taken per day : `r mean(countSteps2$steps)`
+![plot of chunk totalSteps2](figure/totalSteps2.png) 
 
-#### Median of steps taken per day : `r median(countSteps2$steps)`
+#### Mean of steps taken per day : 9354.2295
+
+#### Median of steps taken per day : 1.0395 &times; 10<sup>4</sup>
 
 #### By making the assumption that total steps taken is 0, average and median have reduced values now.
 

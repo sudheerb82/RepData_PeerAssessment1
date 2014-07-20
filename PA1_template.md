@@ -69,3 +69,9 @@ hist(countSteps2$steps, breaks=20, main = "Histogram of total number of steps pe
 ## Are there differences in activity patterns between weekdays and weekends?
 
 
+```r
+weekend <- weekdays(as.Date(activity$date)) %in% c("Saturday", "Sunday")
+dateActivity <- transform(activity, weekend=as.POSIXlt(date, format='%Y/%m/%d')$wday %in% c(0, 6))
+dateActivity$daytype[weekend==TRUE] <- "weekend"
+dateActivity$daytype[weekend==FALSE] <- "weekday"
+```

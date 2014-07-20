@@ -249,6 +249,12 @@ hist(countSteps2$steps, breaks=20, main = &quot;Histogram of total number of ste
 
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 
+<pre><code class="r">weekend &lt;- weekdays(as.Date(activity$date)) %in% c(&quot;Saturday&quot;, &quot;Sunday&quot;)
+dateActivity &lt;- transform(activity, weekend=as.POSIXlt(date, format=&#39;%Y/%m/%d&#39;)$wday %in% c(0, 6))
+dateActivity$daytype[weekend==TRUE] &lt;- &quot;weekend&quot;
+dateActivity$daytype[weekend==FALSE] &lt;- &quot;weekday&quot;
+</code></pre>
+
 </body>
 
 </html>
